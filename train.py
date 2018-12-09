@@ -7,8 +7,8 @@ import tensorflow as tf
 
 
 def inference(x_ph):
-    hidden1 = tf.layers.dense(x_ph, 128, activation=tf.nn.sigmoid)
-    hidden2 = tf.layers.dense(hidden1, 32, activation=tf.nn.sigmoid)
+    hidden1 = tf.layers.dense(x_ph, 32, activation=tf.nn.relu)
+    hidden2 = tf.layers.dense(hidden1, 32, activation=tf.nn.relu)
     logits = tf.layers.dense(hidden2, 3)
     return logits
 
@@ -44,7 +44,7 @@ with tf.Graph().as_default() as g:
     cross_entropy = tf.losses.softmax_cross_entropy(onehot_labels=y_ph, logits=logits, label_smoothing=1e-5)
     correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_ph, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-    train_op = tf.train.AdamOptimizer(learning_rate=0.01).minimize(cross_entropy)
+    train_op = tf.train.AdagradOptimizer(learning_rate=0.01).minimize(cross_entropy)
     init_op = tf.global_variables_initializer()
     saver = tf.train.Saver()
     with tf.Session() as sess:
