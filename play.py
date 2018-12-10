@@ -39,6 +39,9 @@ Input your move!
 [6] bottom-left-square
 [7] bottom-middle-square
 [8] bottom-right-square
+
+x is CPU &
+o is YOU
 """
 
 print(rule)
